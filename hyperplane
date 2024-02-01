@@ -1,0 +1,23 @@
+Plot the decision boundary for a non-linear SVM
+def plot_decision_boundary(model, ax=None):
+    if ax is None:
+        ax = plt.gca()
+        
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    
+    # create grid to evaluate model
+    x = np.linspace(xlim[0], xlim[1], 30)
+    y = np.linspace(ylim[0], ylim[1], 30)
+    Y, X = np.meshgrid(y, x)
+
+	# shape data
+    xy = np.vstack([X.ravel(), Y.ravel()]).T
+    
+	# get the decision boundary hyperplane based on the model
+    P = model.decision_function(xy).reshape(X.shape)
+    
+    # plot decision boundary/ hyperplane
+    ax.contour(X, Y, P,
+               levels=[0], alpha=0.5,
+               linestyles=['-'])
